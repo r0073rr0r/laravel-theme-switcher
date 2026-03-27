@@ -1,0 +1,41 @@
+name: Tests
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: [ develop, master ]
+  pull_request:
+
+jobs:
+  php-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: [8.2, 8.3]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, intl
+          coverage: none
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: composer-${{ runner.os }}-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            composer-${{ runner.os }}-${{ matrix.php }}-
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Run tests
+        run: vendor/bin/pest --colors=always
+
+

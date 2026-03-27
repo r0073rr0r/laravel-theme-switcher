@@ -1,0 +1,6 @@
+version: 2
+updates:
+  - package-ecosystem: "composer"
+    directory: "/" # gde se nalazi composer.json
+    schedule:
+      interval: "daily"

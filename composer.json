@@ -1,0 +1,56 @@
+{
+  "name": "r0073rr0r/laravel-theme-switcher",
+  "description": "Laravel Jestream Livewire Theme (Dark/Light mode) Switcher Component",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "r0073rr0r",
+      "email": "majstorov@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^8.2",
+    "laravel/framework": "^12.0",
+    "livewire/livewire": "^3.0 || ^4.0",
+    "laravel/jetstream": "^5.0"
+  },
+  "require-dev": {
+    "laravel/pint": "^1.25",
+    "orchestra/testbench": "^10.0",
+    "pestphp/pest": "^3.0",
+    "pestphp/pest-plugin-laravel": "^3.0",
+    "nunomaduro/collision": "^8.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "r0073rr0r\\ThemeSwitcher\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "r0073rr0r\\ThemeSwitcher\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "r0073rr0r\\ThemeSwitcher\\ThemeSwitcherServiceProvider"
+      ]
+    }
+  },
+  "scripts": {
+    "test": "pest",
+    "post-install-cmd": [
+      "@php -r \"chdir(__DIR__); if(file_exists('package.json')) { echo 'Running npm install...\\n'; passthru('npm install'); }\""
+    ],
+    "post-update-cmd": [
+      "@php -r \"chdir(__DIR__); if(file_exists('package.json')) { echo 'Running npm install...\\n'; passthru('npm install'); }\""
+    ]
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  }
+}

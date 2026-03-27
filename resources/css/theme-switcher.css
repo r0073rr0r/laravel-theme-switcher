@@ -1,0 +1,141 @@
+@keyframes modal-in {
+    0% { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.animate-modal-in {
+    animation: modal-in 0.2s ease-out forwards;
+}
+
+@layer base {
+    html {
+        color-scheme: light;
+    }
+
+    html.dark {
+        color-scheme: dark;
+    }
+
+    body {
+        @apply bg-gray-100 text-gray-900;
+    }
+
+    html.dark body {
+        @apply bg-gray-900 text-gray-100;
+    }
+
+    input:not([type='checkbox']):not([type='radio']):not([type='range']),
+    select,
+    textarea {
+        @apply border-gray-300 bg-white text-gray-900 placeholder:text-gray-400;
+    }
+
+    html.dark input:not([type='checkbox']):not([type='radio']):not([type='range']),
+    html.dark select,
+    html.dark textarea {
+        @apply border-gray-700 bg-gray-900 text-gray-100 placeholder:text-gray-500;
+    }
+}
+
+.dark .bg-white {
+    background-color: rgb(31 41 55) !important;
+}
+
+.dark .bg-gray-50 {
+    background-color: rgb(55 65 81 / 0.55) !important;
+}
+
+.dark .bg-gray-100 {
+    background-color: rgb(55 65 81) !important;
+}
+
+.dark .bg-gray-200 {
+    background-color: rgb(75 85 99) !important;
+}
+
+.dark .border-gray-100,
+.dark .border-gray-200,
+.dark .border-gray-300 {
+    border-color: rgb(75 85 99) !important;
+}
+
+.dark .divide-gray-200 > :not([hidden]) ~ :not([hidden]) {
+    border-color: rgb(75 85 99) !important;
+}
+
+.dark .text-gray-900,
+.dark .text-gray-800 {
+    color: rgb(243 244 246) !important;
+}
+
+.dark .text-gray-700,
+.dark .text-gray-600 {
+    color: rgb(209 213 219) !important;
+}
+
+.dark .text-gray-500,
+.dark .text-gray-400 {
+    color: rgb(156 163 175) !important;
+}
+
+.dark .hover\:bg-gray-50:hover {
+    background-color: rgb(55 65 81) !important;
+}
+
+.dark .hover\:bg-gray-100:hover,
+.dark .hover\:bg-gray-300:hover {
+    background-color: rgb(75 85 99) !important;
+}
+
+.dark .hover\:text-gray-700:hover,
+.dark .hover\:text-gray-800:hover,
+.dark .focus\:text-gray-700:focus,
+.dark .focus\:text-gray-800:focus {
+    color: rgb(249 250 251) !important;
+}
+
+.dark .focus\:bg-gray-50:focus,
+.dark .focus\:bg-gray-100:focus {
+    background-color: rgb(55 65 81) !important;
+}
+
+.dark .focus\:border-gray-300:focus,
+.dark .hover\:border-gray-300:hover {
+    border-color: rgb(107 114 128) !important;
+}
+
+.dark .shadow,
+.dark .shadow-md,
+.dark .shadow-lg,
+.dark .shadow-xl {
+    box-shadow: 0 20px 40px -24px rgb(0 0 0 / 0.7) !important;
+}
+
+.dark .flatpickr-calendar,
+.dark .flatpickr-monthSelect-months,
+.dark .flatpickr-innerContainer,
+.dark .flatpickr-rContainer {
+    background: rgb(31 41 55) !important;
+    color: rgb(243 244 246) !important;
+    border-color: rgb(75 85 99) !important;
+}
+
+.dark .flatpickr-current-month .flatpickr-monthDropdown-months,
+.dark .flatpickr-current-month input.cur-year,
+.dark .flatpickr-weekday,
+.dark .flatpickr-day,
+.dark .monthSelect-month {
+    color: rgb(243 244 246) !important;
+}
+
+.dark .monthSelect-month:hover,
+.dark .flatpickr-day:hover {
+    background: rgb(55 65 81) !important;
+}
+
+.dark .monthSelect-month.selected,
+.dark .flatpickr-day.selected {
+    background: rgb(79 70 229) !important;
+    border-color: rgb(79 70 229) !important;
+    color: rgb(255 255 255) !important;
+}
