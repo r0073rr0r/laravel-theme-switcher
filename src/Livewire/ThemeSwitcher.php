@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use r0073rr0r\ThemeSwitcher\Support\ThemeSwitcherConfig;
 
 class ThemeSwitcher extends Component
 {
@@ -16,53 +17,71 @@ class ThemeSwitcher extends Component
 
     public function mount(): void
     {
+        $defaultPreference = ThemeSwitcherConfig::defaultPreference();
         $userPreference = Auth::user()?->theme_preference;
-        $cookiePreference = request()->cookie('theme_preference');
-        $resolvedTheme = request()->cookie('theme', 'light');
+        $cookiePreference = request()->cookie(ThemeSwitcherConfig::cookiePreferenceName());
+        $resolvedTheme = request()->cookie(ThemeSwitcherConfig::cookieThemeName(), $defaultPreference);
 
-        $this->preference = in_array($userPreference, ['light', 'dark', 'system'], true)
-            ? $userPreference
-            : (in_array($cookiePreference, ['light', 'dark', 'system'], true) ? $cookiePreference : 'system');
+        $this->preference = ThemeSwitcherConfig::normalizePreference($userPreference)
+            ?? ThemeSwitcherConfig::normalizePreference($cookiePreference)
+            ?? $defaultPreference;
 
-        $this->theme = in_array($resolvedTheme, ['light', 'dark', 'system'], true)
-            ? $resolvedTheme
-            : 'light';
+        $this->theme = ThemeSwitcherConfig::normalizePreference($resolvedTheme)
+            ?? $this->preference;
     }
 
     public function toggle(): void
     {
-        $nextPreference = match ($this->preference) {
-            'light' => 'dark',
-            'dark' => 'system',
-            default => 'light',
-        };
+        $cycleOrder = ThemeSwitcherConfig::cycleOrder();
+        $currentIndex = array_search($this->preference, $cycleOrder, true);
+        $nextIndex = $currentIndex === false ? 0 : (($currentIndex + 1) % count($cycleOrder));
+        $nextPreference = $cycleOrder[$nextIndex];
 
         $this->preference = $nextPreference;
-
         $this->theme = $nextPreference;
 
-        if ($user = Auth::user()) {
+        if (ThemeSwitcherConfig::databaseEnabled() && ($user = Auth::user())) {
             $user->forceFill([
                 'theme_preference' => $nextPreference,
             ])->save();
         }
 
-        Cookie::queue('theme_preference', $this->preference, 60 * 24 * 365);
-        Cookie::queue('theme', $this->theme, 60 * 24 * 365);
+        if (ThemeSwitcherConfig::cookieEnabled()) {
+            Cookie::queue(ThemeSwitcherConfig::cookiePreferenceName(), $this->preference, ThemeSwitcherConfig::cookieMinutes());
+            Cookie::queue(ThemeSwitcherConfig::cookieThemeName(), $this->theme, ThemeSwitcherConfig::cookieMinutes());
+        }
 
-        $this->dispatch('theme-preference-updated', preference: $this->preference);
-        $this->dispatch('theme-changed', preference: $this->preference, theme: $this->theme);
+        if (ThemeSwitcherConfig::dispatchPreferenceUpdated()) {
+            $this->dispatch('theme-preference-updated', preference: $this->preference);
+        }
+
+        if (ThemeSwitcherConfig::dispatchThemeChanged()) {
+            $this->dispatch('theme-changed', preference: $this->preference, theme: $this->theme);
+        }
     }
 
     #[On('theme-switcher-synced')]
     public function syncState(string $preference, string $theme): void
     {
-        $this->preference = in_array($preference, ['light', 'dark', 'system'], true) ? $preference : 'system';
-        $this->theme = in_array($theme, ['light', 'dark', 'system'], true) ? $theme : 'light';
+        $this->preference = ThemeSwitcherConfig::normalizePreference($preference)
+            ?? ThemeSwitcherConfig::defaultPreference();
+        $this->theme = ThemeSwitcherConfig::normalizePreference($theme)
+            ?? $this->preference;
     }
 
     public function render(): View
     {
-        return view('theme-switcher::livewire.theme-switcher');
+        return view('theme-switcher::livewire.theme-switcher', [
+            'allowedPreferences' => ThemeSwitcherConfig::allowedPreferences(),
+            'cycleOrder' => ThemeSwitcherConfig::cycleOrder(),
+            'animationsEnabled' => ThemeSwitcherConfig::animationsEnabled(),
+            'iconTransitionsEnabled' => ThemeSwitcherConfig::iconTransitionsEnabled(),
+            'hoverEffectsEnabled' => ThemeSwitcherConfig::hoverEffectsEnabled(),
+            'reducedMotionEnabled' => ThemeSwitcherConfig::reducedMotionEnabled(),
+            'animationDuration' => ThemeSwitcherConfig::animationDuration(),
+            'buttonSizeClass' => ThemeSwitcherConfig::buttonSizeClass(),
+            'roundedClass' => ThemeSwitcherConfig::roundedClass(),
+            'showTooltip' => ThemeSwitcherConfig::showTooltip(),
+        ]);
     }
 }

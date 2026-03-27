@@ -117,6 +117,58 @@ window.masonTheme.applyPreference(preference, { persist: true })
 
 This is used to keep the Livewire component and browser theme state synchronized.
 
+## Configuration
+
+After publishing the package config, you can control the switcher's default behavior without editing package files:
+
+```php
+return [
+    'default_preference' => 'system',
+    'allowed_preferences' => ['light', 'dark', 'system'],
+    'cycle_order' => ['light', 'dark', 'system'],
+    'animations' => [
+        'enabled' => true,
+        'duration' => 300,
+        'icon_transition' => true,
+        'hover_effects' => true,
+        'respect_reduced_motion' => true,
+    ],
+    'persistence' => [
+        'cookie_enabled' => true,
+        'cookie_name_preference' => 'theme_preference',
+        'cookie_name_theme' => 'theme',
+        'cookie_minutes' => 60 * 24 * 365,
+        'database_enabled' => true,
+    ],
+    'ui' => [
+        'show_system_option' => true,
+        'button_size' => 'md',
+        'rounded' => 'full',
+        'show_tooltip' => true,
+    ],
+    'events' => [
+        'dispatch_theme_changed' => true,
+        'dispatch_preference_updated' => true,
+    ],
+];
+```
+
+What these options are for:
+
+- `default_preference`: fallback preference when no authenticated or cookie state exists.
+- `allowed_preferences`: restrict the package to `light`, `dark`, or `system`.
+- `cycle_order`: controls the order used by the header toggle button.
+- `animations.*`: enables or disables hover and icon transitions, with reduced-motion support.
+- `persistence.*`: decides whether the package writes cookies, updates the authenticated user, or both.
+- `ui.*`: controls whether `system` is shown, the button size, shape, and tooltip behavior.
+- `events.*`: lets you disable the package browser events if you want to manage sync manually.
+
+Examples:
+
+- `['light', 'dark']` removes the system option from the toggle and the profile appearance form.
+- Setting `animations.enabled` to `false` renders the same UI without motion transitions.
+- Setting `persistence.database_enabled` to `false` keeps the switcher cookie-based only.
+
 ## Usage
 
 ### Theme Toggle
@@ -137,9 +189,9 @@ The component:
 
 - Reads the current theme preference from the authenticated user when available
 - Falls back to cookies when no authenticated preference exists
-- Cycles through `light`, `dark`, and `system`
-- Persists the selected preference in cookies
-- Updates the authenticated user's `theme_preference` column when available
+- Cycles through the preferences defined in `theme-switcher.cycle_order`
+- Persists the selected preference according to the `persistence` config
+- Updates the authenticated user's `theme_preference` column when database persistence is enabled
 
 ### Appearance Form
 
@@ -219,6 +271,7 @@ You can customize the package resources after publishing them:
 - The package no longer publishes unrelated third-party assets
 - The authenticated user model is expected to support a `theme_preference` column if you want per-user persistence
 - The service provider registers both `theme-switcher` and `profile.update-appearance-form` Livewire aliases
+- When `animations.respect_reduced_motion` is enabled, motion utility classes are reduced for users who prefer less animation
 
 ## License
 
