@@ -1,21 +1,27 @@
 # Laravel Theme Switcher
 
-[![Packagist Version](https://img.shields.io/packagist/v/r0073rr0r/laravel-theme-switcher)](https://packagist.org/packages/r0073rr0r/laravel-theme-switcher)
-[![Total Downloads](https://img.shields.io/packagist/dt/r0073rr0r/laravel-theme-switcher)](https://packagist.org/packages/r0073rr0r/laravel-theme-switcher)
-[![Monthly Downloads](https://img.shields.io/packagist/dm/r0073rr0r/laravel-theme-switcher)](https://packagist.org/packages/r0073rr0r/laravel-theme-switcher)
-[![PHP Version](https://img.shields.io/packagist/php-v/r0073rr0r/laravel-theme-switcher)](https://packagist.org/packages/r0073rr0r/laravel-theme-switcher)
-[![License](https://img.shields.io/packagist/l/r0073rr0r/laravel-theme-switcher)](https://packagist.org/packages/r0073rr0r/laravel-theme-switcher)
-[![GitHub Stars](https://img.shields.io/github/stars/r0073rr0r/laravel-theme-switcher?style=social)](https://github.com/r0073rr0r/laravel-theme-switcher/stargazers)
-[![GitHub Issues](https://img.shields.io/github/issues/r0073rr0r/laravel-theme-switcher)](https://github.com/r0073rr0r/laravel-theme-switcher/issues)
-[![GitHub Forks](https://img.shields.io/github/forks/r0073rr0r/laravel-theme-switcher?style=social)](https://github.com/r0073rr0r/laravel-theme-switcher/network)
-[![Tests](https://github.com/r0073rr0r/laravel-theme-switcher/actions/workflows/tests.yml/badge.svg)](https://github.com/r0073rr0r/laravel-theme-switcher/actions/workflows/tests.yml)
+<p align="center">
+    A Laravel package for Jetstream and Livewire applications that provides a polished light, dark, and system theme switcher with persistence, package assets, and a Jetstream appearance form.
+</p>
 
-A Laravel package for Jetstream and Livewire applications that provides:
+<p align="center">
+    <a href="https://packagist.org/packages/r0073rr0r/laravel-theme-switcher"><img src="https://img.shields.io/packagist/v/r0073rr0r/laravel-theme-switcher" alt="Packagist Version"></a>
+    <a href="https://packagist.org/packages/r0073rr0r/laravel-theme-switcher"><img src="https://img.shields.io/packagist/dt/r0073rr0r/laravel-theme-switcher" alt="Total Downloads"></a>
+    <a href="https://packagist.org/packages/r0073rr0r/laravel-theme-switcher"><img src="https://img.shields.io/packagist/php-v/r0073rr0r/laravel-theme-switcher" alt="PHP Version"></a>
+    <a href="https://packagist.org/packages/r0073rr0r/laravel-theme-switcher"><img src="https://img.shields.io/packagist/l/r0073rr0r/laravel-theme-switcher" alt="License"></a>
+    <a href="https://github.com/r0073rr0r/laravel-theme-switcher/actions/workflows/tests.yml"><img src="https://github.com/r0073rr0r/laravel-theme-switcher/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
+    <a href="https://github.com/r0073rr0r/laravel-theme-switcher/actions/workflows/php.yml"><img src="https://github.com/r0073rr0r/laravel-theme-switcher/workflows/PHP%20Composer/badge.svg" alt="PHP Composer"></a>
+    <a href="https://github.com/r0073rr0r/laravel-theme-switcher/stargazers"><img src="https://img.shields.io/github/stars/r0073rr0r/laravel-theme-switcher?style=social" alt="GitHub Stars"></a>
+</p>
 
-- a reusable light, dark, and system theme switcher
-- a profile appearance form for Jetstream
-- publishable views, translations, CSS, and JavaScript
-- cookie and database persistence for user theme preference
+## ✨ Features
+
+- 🌗 Reusable Livewire theme toggle with `light`, `dark`, and `system` modes
+- 👤 Optional persistence through cookies and the authenticated user's `theme_preference`
+- 🧩 Jetstream-ready appearance form component for profile settings
+- 🎨 Publishable package views, translations, CSS, and JavaScript
+- ⚡ Early `<head>` bootstrap script to prevent theme flash before page paint
+- 🛠️ Configurable toggle order, animations, tooltip behavior, sizing, and rounding
 
 ## Table of Contents
 
@@ -32,14 +38,14 @@ A Laravel package for Jetstream and Livewire applications that provides:
 - [License](#license)
 - [Contributing](#contributing)
 
-## Requirements
+## 📋 Requirements
 
 - PHP 8.2+
 - Laravel 12.x
 - Livewire 3.x or 4.x
 - Jetstream 5.x
 
-## Installation
+## 🚀 Installation
 
 Install the package via Composer:
 
@@ -83,7 +89,7 @@ Run the migration so the package can persist the user's `theme_preference` value
 php artisan migrate
 ```
 
-## Updating
+## 🔄 Updating
 
 When updating the package, republish the resources you actually use so your application gets the latest views, translations, and frontend files:
 
@@ -97,7 +103,7 @@ php artisan vendor:publish --tag=theme-switcher-assets --force
 
 If you have customized any published files, review the changes before overwriting them.
 
-## Setup
+## ⚙️ Setup
 
 ### 1. Import the package CSS
 
@@ -156,7 +162,7 @@ If you prefer a plain include instead of a Blade component, you can use:
 @include('theme-switcher::components.head')
 ```
 
-## Configuration
+## 🧠 Configuration
 
 After publishing the package config, you can control the switcher's default behavior without editing package files:
 
@@ -208,7 +214,7 @@ Examples:
 - Setting `animations.enabled` to `false` renders the same UI without motion transitions.
 - Setting `persistence.database_enabled` to `false` keeps the switcher cookie-based only.
 
-## Usage
+## 🧪 Usage
 
 ### Theme Toggle
 
@@ -270,7 +276,7 @@ resources/views/profile/update-appearance-form.blade.php
 
 If you publish the package views, you can override that file and adapt it to your own account settings flow.
 
-## Translations
+## 🌍 Translations
 
 The package loads its own translations automatically through the `theme-switcher` namespace, so publishing translations is optional.
 
@@ -294,7 +300,7 @@ This package already includes:
 
 That means a typical application with `fallback_locale=en` will still show English text even when the active locale has no dedicated theme-switcher translation yet.
 
-## Customization
+## 🎨 Customization
 
 After publishing, you can customize these package resources:
 
@@ -308,7 +314,7 @@ The startup head script is provided by the package view component:
 - Component: `theme-switcher::components.head`
 - Include/partial: `theme-switcher::components.head`
 
-## Notes
+## 📝 Notes
 
 - The package CSS is intended to be included in the consumer application's build pipeline
 - The package JavaScript is intended to be imported into the consumer application's JS entry file
@@ -318,10 +324,20 @@ The startup head script is provided by the package view component:
 - The service provider registers both `theme-switcher` and `profile.update-appearance-form` Livewire aliases
 - When `animations.respect_reduced_motion` is enabled, motion utility classes are reduced for users who prefer less animation
 
-## License
+## ✅ Testing
+
+The package test suite is written with Pest and covers configuration helpers, Livewire components, head bootstrap rendering, and persistence behavior.
+
+Run the tests locally with:
+
+```bash
+php vendor/bin/pest
+```
+
+## 📄 License
 
 This package is open-sourced software licensed under the [MIT license](LICENSE).
 
-## Contributing
+## 🤝 Contributing
 
 Pull requests are welcome. For larger changes, open an issue first so the scope is clear before implementation.
