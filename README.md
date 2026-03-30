@@ -9,10 +9,13 @@
 [![GitHub Issues](https://img.shields.io/github/issues/r0073rr0r/laravel-theme-switcher)](https://github.com/r0073rr0r/laravel-theme-switcher/issues)
 [![GitHub Forks](https://img.shields.io/github/forks/r0073rr0r/laravel-theme-switcher?style=social)](https://github.com/r0073rr0r/laravel-theme-switcher/network)
 [![Tests](https://github.com/r0073rr0r/laravel-theme-switcher/actions/workflows/tests.yml/badge.svg)](https://github.com/r0073rr0r/laravel-theme-switcher/actions/workflows/tests.yml)
-[![CodeQL](https://github.com/r0073rr0r/laravel-theme-switcher/workflows/CodeQL/badge.svg)](https://github.com/r0073rr0r/laravel-theme-switcher/actions/workflows/codeql.yml)
-[![PHP Composer](https://github.com/r0073rr0r/laravel-theme-switcher/workflows/PHP%20Composer/badge.svg)](https://github.com/r0073rr0r/laravel-theme-switcher/actions/workflows/codeql.yml)
 
-A Laravel package that integrates with Jetstream and Livewire to provide a reusable light/dark/system theme switcher component, package translations, and publishable CSS/JS resources.
+A Laravel package for Jetstream and Livewire applications that provides:
+
+- a reusable light, dark, and system theme switcher
+- a profile appearance form for Jetstream
+- publishable views, translations, CSS, and JavaScript
+- cookie and database persistence for user theme preference
 
 ## Table of Contents
 
@@ -96,13 +99,15 @@ If you have customized any published files, review the changes before overwritin
 
 ## Setup
 
-After publishing CSS, import it into your application's main stylesheet, for example in `resources/css/app.css`:
+### 1. Import the package CSS
+
+Import the published stylesheet into your application's main stylesheet, for example in `resources/css/app.css`:
 
 ```css
 @import './vendor/theme-switcher.css';
 ```
 
-If your app uses the package views directly, Tailwind also needs to scan them so utility classes like `h-10`, `w-10`, and `rounded-full` are generated.
+If your application uses the package views directly, Tailwind also needs to scan them so utility classes such as `h-10`, `w-10`, and `rounded-full` are generated.
 
 For Tailwind CSS v4, add this to `resources/css/app.css`:
 
@@ -118,7 +123,9 @@ If you published the package views instead, point Tailwind to your published cop
 
 For Tailwind CSS v3, add the same paths to the `content` array in `tailwind.config.js`.
 
-After publishing JavaScript, import it into your application's main JS entry file, for example in `resources/js/app.js`:
+### 2. Import the package JavaScript
+
+Import the published JavaScript into your application's main JS entry file, for example in `resources/js/app.js`:
 
 ```js
 import './vendor/theme-switcher';
@@ -131,7 +138,9 @@ window.masonTheme.getResolvedTheme()
 window.masonTheme.applyPreference(preference, { persist: true })
 ```
 
-This is used to keep the Livewire component and browser theme state synchronized.
+This keeps the Livewire component state synchronized with the browser theme state.
+
+### 3. Add the startup script to your layout `<head>`
 
 To apply the theme before the page paints, add the package head component inside your main layout `<head>`, for example in `resources/views/layouts/app.blade.php`:
 
@@ -139,9 +148,9 @@ To apply the theme before the page paints, add the package head component inside
 <x-theme-switcher-head />
 ```
 
-This component is the recommended integration point because it renders the inline startup script with the current server-side preference and updates the `dark` class before the UI flashes.
+This is the recommended integration point because it renders the inline startup script with the current server-side preference and updates the `dark` class before the UI flashes.
 
-If you prefer a plain include instead of a Blade component, you can also use:
+If you prefer a plain include instead of a Blade component, you can use:
 
 ```blade
 @include('theme-switcher::components.head')
@@ -203,7 +212,7 @@ Examples:
 
 ### Theme Toggle
 
-Render the Livewire component where you want the theme toggle button:
+Render the Livewire component wherever you want the theme toggle button:
 
 ```blade
 <livewire:theme-switcher />
@@ -287,7 +296,7 @@ That means a typical application with `fallback_locale=en` will still show Engli
 
 ## Customization
 
-You can customize the package resources after publishing them:
+After publishing, you can customize these package resources:
 
 - Views: `resources/views/vendor/theme-switcher`
 - Translations: `lang/vendor/theme-switcher`
@@ -303,6 +312,7 @@ The startup head script is provided by the package view component:
 
 - The package CSS is intended to be included in the consumer application's build pipeline
 - The package JavaScript is intended to be imported into the consumer application's JS entry file
+- The startup head script should be rendered from Blade, not bundled as a plain JavaScript file, because it depends on server-side preference state
 - The package no longer publishes unrelated third-party assets
 - The authenticated user model is expected to support a `theme_preference` column if you want per-user persistence
 - The service provider registers both `theme-switcher` and `profile.update-appearance-form` Livewire aliases
