@@ -102,6 +102,22 @@ After publishing CSS, import it into your application's main stylesheet, for exa
 @import './vendor/theme-switcher.css';
 ```
 
+If your app uses the package views directly, Tailwind also needs to scan them so utility classes like `h-10`, `w-10`, and `rounded-full` are generated.
+
+For Tailwind CSS v4, add this to `resources/css/app.css`:
+
+```css
+@source "../../vendor/r0073rr0r/laravel-theme-switcher/resources/views/**/*.blade.php";
+```
+
+If you published the package views instead, point Tailwind to your published copies:
+
+```css
+@source "../views/vendor/theme-switcher/**/*.blade.php";
+```
+
+For Tailwind CSS v3, add the same paths to the `content` array in `tailwind.config.js`.
+
 After publishing JavaScript, import it into your application's main JS entry file, for example in `resources/js/app.js`:
 
 ```js

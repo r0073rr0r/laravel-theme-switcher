@@ -11,7 +11,7 @@
     }
 
     $buttonClasses = implode(' ', array_filter([
-        'group relative inline-flex items-center justify-center border border-gray-200 bg-white text-gray-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300',
+        'group relative inline-flex shrink-0 items-center justify-center border border-gray-200 bg-white p-0 text-gray-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300',
         $buttonSizeClass,
         $roundedClass,
         $animationsEnabled ? 'transition-all ease-out' : null,
@@ -41,7 +41,7 @@
 @endphp
 
 <div
-    class="m-2 p-1"
+    class="m-2 inline-block p-1"
     data-theme-switcher-config
     data-allowed-preferences='@json($allowedPreferences)'
     data-cycle-order='@json($cycleOrder)'
@@ -80,6 +80,7 @@
             x-bind:title="nextLabel()"
         @endif
         class="{{ $buttonClasses }}"
+        style="aspect-ratio: 1 / 1;"
     >
         <span class="{{ $glowClasses }}"></span>
 
