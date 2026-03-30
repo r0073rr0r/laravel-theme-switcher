@@ -63,7 +63,7 @@ it('renders a fixed square toggle button so the control stays circular', functio
         ->assertSeeHtml('aspect-ratio: 1 / 1;');
 });
 
-it('renders configured size, rounded style, and omits the tooltip when disabled', function () {
+it('renders configured size, keeps the header toggle circular, and omits the tooltip when disabled', function () {
     config()->set('theme-switcher.ui.button_size', 'lg');
     config()->set('theme-switcher.ui.rounded', 'md');
     config()->set('theme-switcher.ui.show_tooltip', false);
@@ -71,7 +71,7 @@ it('renders configured size, rounded style, and omits the tooltip when disabled'
 
     Livewire::test(ThemeSwitcher::class)
         ->assertSeeHtml('h-12 w-12')
-        ->assertSeeHtml('rounded-md')
+        ->assertSeeHtml('rounded-full')
         ->assertDontSeeHtml('x-bind:title=');
 });
 
