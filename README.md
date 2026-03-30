@@ -117,6 +117,20 @@ window.masonTheme.applyPreference(preference, { persist: true })
 
 This is used to keep the Livewire component and browser theme state synchronized.
 
+To apply the theme before the page paints, add the package head component inside your main layout `<head>`, for example in `resources/views/layouts/app.blade.php`:
+
+```blade
+<x-theme-switcher-head />
+```
+
+This component is the recommended integration point because it renders the inline startup script with the current server-side preference and updates the `dark` class before the UI flashes.
+
+If you prefer a plain include instead of a Blade component, you can also use:
+
+```blade
+@include('theme-switcher::components.head')
+```
+
 ## Configuration
 
 After publishing the package config, you can control the switcher's default behavior without editing package files:
@@ -263,6 +277,11 @@ You can customize the package resources after publishing them:
 - Translations: `lang/vendor/theme-switcher`
 - CSS: `resources/css/vendor/theme-switcher.css`
 - JavaScript: `resources/js/vendor/theme-switcher.js`
+
+The startup head script is provided by the package view component:
+
+- Component: `theme-switcher::components.head`
+- Include/partial: `theme-switcher::components.head`
 
 ## Notes
 

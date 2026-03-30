@@ -2,6 +2,7 @@
 
 namespace r0073rr0r\ThemeSwitcher;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use r0073rr0r\ThemeSwitcher\Livewire\Profile\UpdateAppearanceForm;
@@ -14,6 +15,7 @@ class ThemeSwitcherServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'theme-switcher');
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'theme-switcher');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        Blade::component('theme-switcher::components.head', 'theme-switcher-head');
 
         if (class_exists(Livewire::class)) {
             Livewire::component('theme-switcher', ThemeSwitcherComponent::class);
