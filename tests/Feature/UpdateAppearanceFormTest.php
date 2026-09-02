@@ -16,7 +16,7 @@ it('mounts from cookie values when no authenticated user exists', function () {
     ]);
     app()->instance('request', $request);
 
-    $component = new UpdateAppearanceForm();
+    $component = new UpdateAppearanceForm;
     $component->mount();
 
     expect($component->themePreference)->toBe('dark');
@@ -76,5 +76,5 @@ it('registers the livewire aliases and blade head component', function () {
 
     $html = Blade::render('<x-theme-switcher-head />');
 
-    expect($html)->toContain('window.masonTheme = {');
+    expect($html)->toContain('window.masonTheme={');
 });

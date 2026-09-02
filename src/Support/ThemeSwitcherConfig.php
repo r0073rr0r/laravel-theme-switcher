@@ -188,4 +188,3 @@ class ThemeSwitcherConfig
         return ['light', 'dark', 'system'];
     }
 }
-

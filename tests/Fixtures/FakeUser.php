@@ -11,7 +11,7 @@ class FakeUser
     ) {}
 
     /**
-     * @param array<string, mixed> $attributes
+     * @param  array<string, mixed>  $attributes
      */
     public function forceFill(array $attributes): self
     {

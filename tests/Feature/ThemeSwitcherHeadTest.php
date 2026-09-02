@@ -11,7 +11,7 @@ it('renders the head component alias with the mason theme bootstrap script', fun
 
     expect($html)
         ->toContain('theme-color-meta')
-        ->toContain('window.masonTheme = {')
+        ->toContain('window.masonTheme={')
         ->toContain("const serverThemePreference = 'dark';");
 });
 
@@ -24,6 +24,6 @@ it('renders the head include using the cookie preference fallback', function () 
     $html = Blade::render("@include('theme-switcher::components.head')");
 
     expect($html)
-        ->toContain('window.masonTheme = {')
+        ->toContain('window.masonTheme={')
         ->toContain("const serverThemePreference = 'dark';");
 });

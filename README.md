@@ -40,8 +40,8 @@
 
 ## 📋 Requirements
 
-- PHP 8.2+
-- Laravel 12.x
+- PHP 8.2+ (PHP 8.3+ for Laravel 13)
+- Laravel 12.x or 13.x
 - Livewire 3.x or 4.x
 - Jetstream 5.x
 

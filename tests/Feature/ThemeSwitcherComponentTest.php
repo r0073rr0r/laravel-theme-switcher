@@ -26,7 +26,7 @@ it('prefers the authenticated user over cookies on mount', function () {
     ]);
     app()->instance('request', $request);
 
-    $component = new ThemeSwitcher();
+    $component = new ThemeSwitcher;
     $component->mount();
 
     expect($component->preference)->toBe('dark');
